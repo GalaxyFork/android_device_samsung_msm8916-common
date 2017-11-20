@@ -13,3 +13,5 @@ allow qti_init_shell qmuxd:unix_stream_socket { connectto };
 allow qti_init_shell bluetooth_efs_file:file { open read getattr };
 allow qti_init_shell bluetooth_efs_file:dir { search };
 allow qti_init_shell efs_file:dir { search };
+allow qti_init_shell system_data_file:lnk_file { getattr read unlink create setattr };
+allow qti_init_shell device:dir { getattr read unlink create setattr };
