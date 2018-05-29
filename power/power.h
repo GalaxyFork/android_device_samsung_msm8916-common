@@ -39,6 +39,11 @@ typedef struct governor_settings {
     int scaling_max_freq;
     int scaling_min_freq;
     int scaling_min_freq_off;
+    int gpu_min_pwrlevel;
+    int gpu_max_pwrlevel;
+    int gpu_min_pwrlevel_off;
+    int gpu_max_pwrlevel_off;
+    int gpu_default_pwrlevel;
 } power_profile;
 
 static power_profile profiles[PROFILE_MAX] = {
@@ -57,5 +62,10 @@ static power_profile profiles[PROFILE_MAX] = {
         .scaling_max_freq = 1209600,
         .scaling_min_freq = 800000,
         .scaling_min_freq_off = 200000,
+        .gpu_min_pwrlevel = 3,
+        .gpu_min_pwrlevel_off = 3,
+        .gpu_max_pwrlevel = 0,
+        .gpu_max_pwrlevel_off = 3,
+        .gpu_default_pwrlevel = 1,
     },
 };

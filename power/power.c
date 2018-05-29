@@ -30,6 +30,7 @@
 
 #define CPUFREQ_PATH "/sys/devices/system/cpu/cpu0/cpufreq/"
 #define INTERACTIVE_PATH "/sys/devices/system/cpu/cpufreq/interactive/"
+#define GPU_PWR_PATH "/sys/devices/soc.0/1c00000.qcom,kgsl-3d0/kgsl/kgsl-3d0/"
 
 static pthread_mutex_t lock = PTHREAD_MUTEX_INITIALIZER;
 static int boostpulse_fd = -1;
@@ -107,6 +108,12 @@ static void power_set_interactive(__attribute__((unused)) struct power_module *m
                         profiles[current_power_profile].target_loads);
         sysfs_write_int(CPUFREQ_PATH "scaling_min_freq",
                         profiles[current_power_profile].scaling_min_freq);
+        sysfs_write_int(GPU_PWR_PATH "min_pwrlevel",
+                        profiles[current_power_profile].gpu_min_pwrlevel);
+        sysfs_write_int(GPU_PWR_PATH "max_pwrlevel",
+                        profiles[current_power_profile].gpu_max_pwrlevel);
+        sysfs_write_int(GPU_PWR_PATH "default_pwrlevel",
+                        profiles[current_power_profile].gpu_default_pwrlevel);
     } else {
         sysfs_write_int(INTERACTIVE_PATH "hispeed_freq",
                         profiles[current_power_profile].hispeed_freq_off);
@@ -116,6 +123,12 @@ static void power_set_interactive(__attribute__((unused)) struct power_module *m
                         profiles[current_power_profile].target_loads_off);
         sysfs_write_int(CPUFREQ_PATH "scaling_min_freq",
                         profiles[current_power_profile].scaling_min_freq_off);
+        sysfs_write_int(GPU_PWR_PATH "min_pwrlevel",
+                        profiles[current_power_profile].gpu_min_pwrlevel_off);
+        sysfs_write_int(GPU_PWR_PATH "max_pwrlevel",
+                        profiles[current_power_profile].gpu_max_pwrlevel_off);
+        sysfs_write_int(GPU_PWR_PATH "default_pwrlevel",
+                        profiles[current_power_profile].gpu_default_pwrlevel);
     }
 }
 
@@ -151,7 +164,13 @@ static void set_power_profile(int profile)
                     profiles[profile].scaling_max_freq);
     sysfs_write_int(CPUFREQ_PATH "scaling_min_freq",
                     profiles[profile].scaling_min_freq);
-
+    sysfs_write_int(GPU_PWR_PATH "min_pwrlevel",
+                    profiles[profile].gpu_min_pwrlevel);
+    sysfs_write_int(GPU_PWR_PATH "max_pwrlevel",
+                    profiles[profile].gpu_max_pwrlevel);
+        sysfs_write_int(GPU_PWR_PATH "default_pwrlevel",
+                        profiles[current_power_profile].gpu_default_pwrlevel);
+						
     current_power_profile = profile;
 }
 
